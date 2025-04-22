@@ -141,137 +141,160 @@
 </div>
 
 <script>
-    // === اسکریپت‌های قبلی برای نمایش/عدم نمایش فیلدهای شرطی ===
-    function toggleConditionalInput(checkboxId, textInputId) { /* ... (کد قبلی بدون تغییر) ... */
+    // === Functions for Conditional Fields (Keep As Is) ===
+    function toggleConditionalInput(checkboxId, textInputId) {
         const checkbox = document.getElementById(checkboxId);
         const textInput = document.getElementById(textInputId);
         if (checkbox && textInput) {
-            textInput.style.display = checkbox.checked ? 'block' : 'none';
-            checkbox.addEventListener('change', () => {
+            const updateDisplay = () => {
                 textInput.style.display = checkbox.checked ? 'block' : 'none';
-                if(!checkbox.checked) textInput.value = '';
-            });
-        }
-     }
-    function toggleConditionalInputRadio(radioName, targetValue, textInputId) { /* ... (کد قبلی بدون تغییر) ... */
-        const radios = document.getElementsByName(radioName);
-        const textInput = document.getElementById(textInputId);
-        let initiallyChecked = false;
-        if(textInput){
-             radios.forEach(radio => {
-                 if (radio.value === targetValue && radio.checked) {
-                     initiallyChecked = true;
-                 }
-                 radio.addEventListener('change', (event) => {
-                     if (event.target.value === targetValue && event.target.checked) {
-                         textInput.style.display = 'block';
-                     } else {
-                          let shouldHide = true;
-                          radios.forEach(r => { if (r.value === targetValue && r.checked) { shouldHide = false; } });
-                          if (shouldHide) { textInput.style.display = 'none'; textInput.value = ''; }
-                     }
-                 });
-             });
-             textInput.style.display = initiallyChecked ? 'block' : 'none';
+                if (!checkbox.checked) textInput.value = '';
+            };
+            updateDisplay(); // Initial check
+            checkbox.addEventListener('change', updateDisplay);
+        } else {
+            console.warn(`Conditional elements not found: ${checkboxId} or ${textInputId}`);
         }
     }
+
+    function toggleConditionalInputRadio(radioName, targetValue, textInputId) {
+        const radios = document.querySelectorAll(`input[name="${radioName}"]`); // More specific selector
+        const textInput = document.getElementById(textInputId);
+        if (radios.length > 0 && textInput) {
+            const updateDisplay = () => {
+                let show = false;
+                radios.forEach(radio => {
+                    if (radio.value === targetValue && radio.checked) {
+                        show = true;
+                    }
+                });
+                textInput.style.display = show ? 'block' : 'none';
+                if (!show) textInput.value = '';
+            };
+            updateDisplay(); // Initial check
+            radios.forEach(radio => radio.addEventListener('change', updateDisplay));
+        } else {
+             console.warn(`Conditional elements not found for radio group: ${radioName} or input ${textInputId}`);
+        }
+    }
+    // ==========================================================
+
+    // === Execute when the DOM is fully loaded ===
     document.addEventListener('DOMContentLoaded', () => {
+        // Setup conditional fields
         toggleConditionalInput('page_other_check', 'page_other_text');
         toggleConditionalInput('lang_other_check', 'lang_other_text');
         toggleConditionalInputRadio('وضعیت_دامنه', 'بله', 'domain_name_text');
         toggleConditionalInputRadio('وضعیت_هاست', 'بله', 'hosting_info_text');
-    });
-    // ==========================================================
 
+        // === AJAX Form Submission Logic ===
+        const form = document.getElementById('needs-assessment-form');
+        const statusDiv = document.getElementById('form-status');
+        const submitButton = form ? form.querySelector('button[type="submit"]') : null;
+        const formspreeURL = 'https://formspree.io/f/xanowgzw'; // ** CONFIRM THIS IS YOUR CORRECT FORM ID **
 
-    // === اسکریپت جدید و اصلاح شده برای ارسال AJAX با منطق کد نمونه شما ===
-    const form = document.getElementById('needs-assessment-form');
-    const statusDiv = document.getElementById('form-status');
-    const submitButton = form.querySelector('button[type="submit"]');
-    const formspreeURL = 'https://formspree.io/f/xanowgzw'; // ** آدرس فرم خودتان **
+        // Check if all required elements are present
+        if (!form) {
+            console.error("Form with ID 'needs-assessment-form' not found.");
+            return;
+        }
+        if (!statusDiv) {
+            console.error("Status div with ID 'form-status' not found.");
+            return;
+        }
+        if (!submitButton) {
+            console.error("Submit button within the form not found.");
+            return;
+        }
 
-    if (form && statusDiv && submitButton) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // جلوگیری از ارسال پیش‌فرض
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default redirect behavior
+            console.log('Submit event triggered & default prevented.');
 
-            const formData = new FormData(this);
+            const formData = new FormData(form);
             const formObject = Object.fromEntries(formData.entries());
             const jsonData = JSON.stringify(formObject);
             const originalButtonText = submitButton.textContent;
 
-            // نمایش پیام "در حال ارسال" و غیرفعال کردن دکمه
+            // --- Set UI to Sending State ---
             submitButton.disabled = true;
             submitButton.textContent = 'در حال ارسال...';
-            statusDiv.className = 'sending'; // استفاده از کلاس برای استایل
-            statusDiv.innerHTML = "در حال ارسال اطلاعات...";
-            statusDiv.style.display = 'block'; // نمایش پیام
+            statusDiv.className = 'sending'; // Use class for styling
+            statusDiv.textContent = "در حال ارسال اطلاعات..."; // Use textContent for plain text
+            statusDiv.style.display = 'block'; // Ensure it's visible
+            console.log('UI set to sending state.');
 
-            fetch(formspreeURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json', // ارسال به صورت JSON
-                    'Accept': 'application/json'       // درخواست پاسخ JSON
-                },
-                body: jsonData
-            })
-            .then(response => {
-                // بررسی وضعیت پاسخ - Formspree باید 2xx یا 3xx بدهد حتی با Accept: application/json
-                if (response.ok || (response.status >= 300 && response.status < 400) ) {
-                    return Promise.resolve(response); // موفقیت آمیز بود
+            try {
+                console.log(`Fetching ${formspreeURL}...`);
+                const response = await fetch(formspreeURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json' // IMPORTANT: Tells Formspree to respond with JSON
+                    },
+                    body: jsonData
+                });
+
+                console.log(`Response received. Status: ${response.status}, OK: ${response.ok}`);
+
+                if (response.ok) {
+                    // Successful submission according to HTTP status
+                    const responseData = await response.json(); // Formspree usually returns {ok: true} or similar
+                    console.log('Fetch successful. Response data:', responseData);
+
+                    // --- Set UI to Success State ---
+                    statusDiv.className = 'success';
+                    statusDiv.textContent = "فرم شما با موفقیت ثبت شد. متشکریم!";
+                    statusDiv.style.display = 'block';
+                    form.reset(); // Clear the form fields
+                    form.style.display = 'none'; // Hide the form itself (optional)
+                    console.log('UI set to success state. Form hidden.');
+
+                    // Scroll to the success message (optional)
+                    statusDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
                 } else {
-                    // تلاش برای خواندن خطای JSON از Formspree
-                    return response.json().then(data => {
-                        const errorMessage = data.errors ? data.errors.map(e => e.message).join(', ') : 'خطایی در ارسال فرم رخ داد.';
-                        throw new Error(errorMessage); // پرتاب خطا با پیام Formspree
-                    }).catch(jsonError => {
-                        // اگر پاسخ JSON نبود یا خطای دیگری بود
-                        throw new Error(`خطا در ارسال: ${response.statusText} (کد: ${response.status})`);
-                    });
+                    // Server returned an error status (4xx, 5xx)
+                    let errorMessage = `خطای سرور: ${response.status} ${response.statusText}`;
+                    try {
+                        // Attempt to get more specific error from Formspree JSON body
+                        const errorData = await response.json();
+                        console.error('Formspree error response:', errorData);
+                        if (errorData && errorData.errors && errorData.errors.length > 0) {
+                            // Extract message from Formspree error structure
+                            errorMessage = errorData.errors.map(err => err.message || err.field || 'خطای نامشخص').join(', ');
+                        } else if (errorData && errorData.error) {
+                             errorMessage = errorData.error;
+                        }
+                    } catch (parseError) {
+                        console.error("Could not parse error JSON response:", parseError);
+                        // Keep the original status text error if JSON parsing fails
+                    }
+                    throw new Error(errorMessage); // Throw to be caught by the catch block
                 }
-            })
-            .then(() => {
-                // --- موفقیت ---
-                console.log('Success with Formspree!');
-                statusDiv.className = 'success'; // کلاس موفقیت
-                statusDiv.innerHTML = "فرم شما با موفقیت ثبت شد. متشکریم!";
-                statusDiv.style.display = 'block'; // اطمینان از نمایش
-                form.reset(); // پاک کردن فرم
-                form.style.display = 'none'; // مخفی کردن فرم (اختیاری)
 
-                // اسکرول به پیام (اختیاری)
-                statusDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } catch (error) {
+                // Network error or error thrown from the 'else' block above
+                console.error('Submission error:', error);
 
-                /*
-                // کد محو شدن پیام پس از چند ثانیه (اختیاری - از کد نمونه شما)
-                setTimeout(() => {
-                    statusDiv.style.transition = 'opacity 0.5s ease';
-                    statusDiv.style.opacity = '0';
-                    setTimeout(() => {
-                        statusDiv.style.display = 'none';
-                        statusDiv.style.opacity = '1';
-                        statusDiv.style.transition = '';
-                    }, 500);
-                }, 7000); // 7 ثانیه نمایش
-                */
-            })
-            .catch(error => {
-                // --- خطا ---
-                console.error('Error!', error.message);
-                statusDiv.className = 'error'; // کلاس خطا
-                statusDiv.innerHTML = `مشکلی در ارسال فرم رخ داد: ${error.message}`;
-                statusDiv.style.display = 'block'; // نمایش پیام خطا
-            })
-            .finally(() => {
-                // --- همیشه اجرا می‌شود ---
-                submitButton.disabled = false; // فعال کردن مجدد دکمه
-                submitButton.textContent = originalButtonText; // بازگرداندن متن اصلی دکمه
-            });
+                // --- Set UI to Error State ---
+                statusDiv.className = 'error';
+                statusDiv.textContent = `مشکلی در ارسال فرم رخ داد: ${error.message}`;
+                statusDiv.style.display = 'block';
+                console.log('UI set to error state.');
+
+            } finally {
+                // --- Always Re-enable Button ---
+                // This runs whether the fetch succeeded or failed
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+                console.log('Finally block executed. Button re-enabled.');
+            }
         });
-    } else {
-        console.error("Form elements (#needs-assessment-form, #form-status, or submit button) not found.");
-    }
-    // ====================================================================
 
+        console.log("Form submission handler attached.");
+
+    }); // End DOMContentLoaded
 </script>
 
 </body>
