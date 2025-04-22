@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم نیازسنجی وب‌سایت شرکت بازرگانی</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <style>
+        /* === استایل‌های قبلی اینجا قرار می‌گیرند === */
+        /* (تمام استایل‌های مربوط به body, container, h1, fieldset, legend, label, input, textarea, button و ...) */
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            line-height: 1.7;
+            background-color: #f4f7f6;
+            color: #333;
+            font-size: 16px;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px; margin: 30px auto; background-color: #ffffff; padding: 30px 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border: 1px solid #e0e0e0;
+        }
+        h1 { color: #0056b3; text-align: center; margin-bottom: 25px; font-weight: 700; padding-bottom: 15px; border-bottom: 2px solid #eee; }
+        .intro-text { text-align: center; margin-bottom: 30px; color: #555; }
+        fieldset { border: 1px solid #dbe3e9; padding: 25px 30px; margin-bottom: 30px; border-radius: 8px; background-color: #fdfdfd; }
+        legend { font-weight: 600; color: #0056b3; font-size: 1.2em; padding: 0 15px; margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 500; color: #444; }
+        input[type="text"], input[type="email"], input[type="url"], input[type="tel"], textarea { width: 100%; padding: 12px 15px; margin-bottom: 18px; border: 1px solid #ccc; border-radius: 5px; font-family: 'Vazirmatn', Tahoma, sans-serif; font-size: 1rem; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="tel"]:focus, textarea:focus { border-color: #0056b3; outline: none; box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1); }
+        textarea { min-height: 120px; resize: vertical; }
+        .checkbox-group, .radio-group { margin-bottom: 15px; padding-right: 5px; }
+        .checkbox-group div, .radio-group div { margin-bottom: 10px; display: flex; align-items: center; }
+        .checkbox-group input[type="checkbox"], .radio-group input[type="radio"] { margin-left: 10px; cursor: pointer; width: 1.1em; height: 1.1em; }
+        .checkbox-group label, .radio-group label { font-weight: normal; margin-bottom: 0; cursor: pointer; flex-grow: 1; }
+        .inline-text-input { margin-top: 5px; padding: 8px 12px; font-size: 0.95rem; }
+        button[type="submit"] { background-color: #0069d9; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1rem; font-weight: 500; font-family: 'Vazirmatn', Tahoma, sans-serif; transition: background-color 0.3s ease, transform 0.1s ease; display: block; width: 100%; max-width: 250px; margin: 20px auto 0; }
+        button[type="submit"]:hover { background-color: #0056b3; transform: translateY(-1px); }
+        button[type="submit"]:disabled { background-color: #cccccc; cursor: not-allowed; } /* Style for disabled button */
+        .required-star { color: #e74c3c; margin-right: 3px; font-weight: bold; }
+        @media (max-width: 768px) { .container { padding: 20px 25px; } h1 { font-size: 1.8em; } legend { font-size: 1.1em; } button[type="submit"] { max-width: 100%; } }
+        @media (max-width: 480px) { body { padding: 10px; } .container { padding: 15px 20px; } h1 { font-size: 1.5em; } }
+
+        /* --- استایل‌های جدید برای پیام وضعیت --- */
+        #form-status {
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 500;
+            display: none; /* Initially hidden */
+            border: 1px solid transparent;
+        }
+        #form-status.success {
+            background-color: #d4edda; /* Light green */
+            color: #155724;       /* Dark green text */
+            border-color: #c3e6cb;
+            display: block; /* Show it when class is added */
+        }
+        #form-status.error {
+            background-color: #f8d7da; /* Light red */
+            color: #721c24;       /* Dark red text */
+            border-color: #f5c6cb;
+            display: block; /* Show it when class is added */
+        }
+         #form-status.sending {
+            background-color: #e2e3e5; /* Light gray */
+            color: #383d41;       /* Dark gray text */
+            border-color: #d6d8db;
+            display: block; /* Show it when class is added */
+        }
+        /* ------------------------------------ */
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>فرم نیازسنجی وب‌سایت</h1>
+    <p class="intro-text">لطفاً برای درک بهتر نیازمندی‌های شما جهت طراحی وب‌سایت شرکت، به سوالات زیر با دقت پاسخ دهید.</p>
+
+    <!-- Add id="needs-assessment-form" to the form -->
+    <form id="needs-assessment-form" action="https://formspree.io/f/xanowgzw" method="POST">
+
+        <fieldset>
+            <legend>۱. اطلاعات کلی شرکت و وب‌سایت</legend>
+            <!-- ... (تمام فیلدهای بخش ۱) ... -->
+             <div> <label for="company_name">نام کامل شرکت: <span class="required-star">*</span></label> <input type="text" id="company_name" name="نام_شرکت" required> </div>
+             <div> <label for="business_activity">زمینه اصلی فعالیت شرکت (واردات/صادرات چه کالاها/خدماتی؟): <span class="required-star">*</span></label> <textarea id="business_activity" name="زمینه_فعالیت" required></textarea> </div>
+             <div> <label for="website_goal">هدف اصلی از راه‌اندازی یا بازطراحی وب‌سایت چیست؟ (مثلاً: افزایش اعتبار، معرفی، جذب مشتری، ارتباط با شرکا و...): <span class="required-star">*</span></label> <textarea id="website_goal" name="هدف_وبسایت" required></textarea> </div>
+             <div> <label for="target_audience">مخاطبان اصلی وب‌سایت چه کسانی هستند؟ (داخلی/خارجی، مشتریان، تأمین‌کنندگان، کارجویان؟)</label> <textarea id="target_audience" name="مخاطبان_هدف"></textarea> </div>
+             <div> <label for="current_website">آیا وب‌سایت فعلی دارید؟ (اگر بله، لطفاً آدرس آن را وارد کنید)</label> <input type="url" id="current_website" name="وبسایت_فعلی" placeholder="https://example.com"> </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>۲. محتوا و صفحات مورد نیاز</legend>
+            <!-- ... (تمام فیلدهای بخش ۲) ... -->
+             <label>صفحات اصلی مورد نیاز در وب‌سایت: <span class="required-star">*</span></label>
+             <div class="checkbox-group">
+                 <div><input type="checkbox" id="page_home" name="صفحات_مورد_نیاز[]" value="صفحه_اصلی" checked disabled><label for="page_home">صفحه اصلی (Home)</label></div>
+                 <div><input type="checkbox" id="page_about" name="صفحات_مورد_نیاز[]" value="درباره_ما"><label for="page_about">درباره ما (تاریخچه، ماموریت، تیم و...)</label></div>
+                 <div><input type="checkbox" id="page_products" name="صفحات_مورد_نیاز[]" value="محصولات_خدمات"><label for="page_products">محصولات / خدمات (با دسته‌بندی احتمالی)</label></div>
+                 <div><input type="checkbox" id="page_news" name="صفحات_مورد_نیاز[]" value="اخبار_مقالات"><label for="page_news">اخبار / مقالات / وبلاگ</label></div>
+                 <div><input type="checkbox" id="page_contact" name="صفحات_مورد_نیاز[]" value="تماس_با_ما" checked disabled><label for="page_contact">تماس با ما (اطلاعات تماس، فرم، نقشه)</label></div>
+                 <div><input type="checkbox" id="page_gallery" name="صفحات_مورد_نیاز[]" value="گالری_پروژه_ها"><label for="page_gallery">گالری تصاویر / پروژه‌ها</label></div>
+                 <div><input type="checkbox" id="page_careers" name="صفحات_مورد_نیاز[]" value="فرصتهای_شغلی"><label for="page_careers">همکاری با ما / فرصت‌های شغلی</label></div>
+                 <div><input type="checkbox" id="page_certs" name="صفحات_مورد_نیاز[]" value="گواهینامه_ها"><label for="page_certs">گواهینامه‌ها / افتخارات</label></div>
+                 <div><input type="checkbox" id="page_faq" name="صفحات_مورد_نیاز[]" value="سوالات_متداول"><label for="page_faq">سوالات متداول (FAQ)</label></div>
+                 <div> <input type="checkbox" id="page_other_check" name="صفحات_مورد_نیاز[]" value="صفحه_دیگر_دارد"> <label for="page_other_check">صفحه دیگری مد نظر دارید؟ (لطفاً در کادر زیر بنویسید)</label> </div>
+                 <input type="text" id="page_other_text" name="صفحه_دیگر_توضیح" placeholder="نام صفحه یا صفحات دیگر..." class="inline-text-input" style="display: none;">
+             </div>
+             <label style="margin-top: 20px;">وضعیت محتوای متنی (معرفی‌ها، توضیحات محصولات و...):</label>
+             <div class="radio-group">
+                 <div><input type="radio" id="content_text_ready" name="وضعیت_محتوای_متنی" value="آماده_است"><label for="content_text_ready">آماده است و ارائه می‌شود</label></div>
+                 <div><input type="radio" id="content_text_partial" name="وضعیت_محتوای_متنی" value="نیاز_به_تکمیل_دارد"><label for="content_text_partial">بخشی آماده است، نیاز به تکمیل دارد</label></div>
+                 <div><input type="radio" id="content_text_none" name="وضعیت_محتوای_متنی" value="آماده_نیست"><label for="content_text_none">آماده نیست / نیاز به تهیه دارد</label></div>
+             </div>
+             <label style="margin-top: 20px;">وضعیت لوگو و تصاویر مورد نیاز (شرکت، محصولات، پروژه‌ها):</label>
+              <div class="radio-group">
+                 <div><input type="radio" id="content_media_ready" name="وضعیت_لوگو_تصاویر" value="آماده_است"><label for="content_media_ready">لوگو و تصاویر لازم با کیفیت مناسب آماده است</label></div>
+                 <div><input type="radio" id="content_media_partial" name="وضعیت_لوگو_تصاویر" value="برخی_آماده_است"><label for="content_media_partial">لوگو آماده است، تصاویر نیاز به تهیه دارد</label></div>
+                 <div><input type="radio" id="content_media_none" name="وضعیت_لوگو_تصاویر" value="آماده_نیست"><label for="content_media_none">نیاز به طراحی لوگو و/یا تهیه تصاویر دارد</label></div>
+             </div>
+        </fieldset>
+
+         <fieldset>
+            <legend>۳. طراحی ظاهری و برندینگ</legend>
+             <!-- ... (تمام فیلدهای بخش ۳) ... -->
+             <div> <label for="brand_guideline">آیا دستورالعمل برندینگ (رنگ سازمانی، فونت و...) یا هویت بصری مشخصی دارید؟</label> <textarea id="brand_guideline" name="دستورالعمل_برندینگ" placeholder="اگر بله، لطفاً توضیح دهید یا به فایل آن اشاره کنید."></textarea> </div>
+             <div> <label for="design_style">سبک طراحی کلی مورد نظر شما چیست؟</label> <textarea id="design_style" name="سبک_طراحی" placeholder="مثلاً: مدرن و مینیمال، رسمی و کلاسیک، گرم و دوستانه، صنعتی، لوکس..."></textarea> </div>
+             <div> <label for="sample_websites">آیا وب‌سایت‌های خاصی (ایرانی یا خارجی، حتی غیرمرتبط) وجود دارند که از نظر ظاهری، حس و حال یا ساختار آن‌ها را می‌پسندید یا نمی‌پسندید؟</label> <textarea id="sample_websites" name="وبسایتهای_نمونه" placeholder="لطفاً آدرس سایت‌ها (URL) و دلیل علاقه یا عدم علاقه خود را به طور خلاصه ذکر کنید. این مورد به درک سلیقه شما کمک زیادی می‌کند."></textarea> </div>
+         </fieldset>
+
+         <fieldset>
+             <legend>۴. ویژگی‌ها و امکانات فنی</legend>
+              <!-- ... (تمام فیلدهای بخش ۴) ... -->
+             <label>زبان‌های مورد نیاز وب‌سایت: <span class="required-star">*</span></label>
+              <div class="checkbox-group">
+                  <div><input type="checkbox" id="lang_fa" name="زبانها[]" value="فارسی" checked><label for="lang_fa">فارسی (زبان اصلی)</label></div>
+                  <div><input type="checkbox" id="lang_en" name="زبانها[]" value="انگلیسی"><label for="lang_en">انگلیسی</label></div>
+                  <div><input type="checkbox" id="lang_ar" name="زبانها[]" value="عربی"><label for="lang_ar">عربی</label></div>
+                  <div><input type="checkbox" id="lang_ru" name="زبانها[]" value="روسی"><label for="lang_ru">روسی</label></div>
+                  <div> <input type="checkbox" id="lang_other_check" name="زبانها[]" value="زبان_دیگر_دارد"> <label for="lang_other_check">زبان دیگری مد نظر دارید؟ (در کادر زیر بنویسید)</label> </div>
+                  <input type="text" id="lang_other_text" name="زبان_دیگر_توضیح" placeholder="نام زبان یا زبان‌های دیگر..." class="inline-text-input" style="display: none;">
+              </div>
+             <div style="margin-top: 20px;"> <label for="specific_forms">آیا به فرم‌های خاص دیگری به جز فرم تماس با ما نیاز دارید؟ (مثلاً: فرم استخدام، درخواست نمایندگی، استعلام قیمت ساده)</label> <textarea id="specific_forms" name="فرمهای_خاص"></textarea> </div>
+              <label style="margin-top: 20px;">موارد فنی استاندارد (پیش‌فرض لحاظ می‌شوند):</label>
+              <div class="checkbox-group">
+                  <div><input type="checkbox" id="tech_responsive" name="ویژگی_واکنشگرا" value="بله" checked disabled><label for="tech_responsive"> نمایش صحیح سایت در موبایل و تبلت (واکنش‌گرا)</label></div>
+                  <div><input type="checkbox" id="tech_seo" name="ویژگی_سئو_پایه" value="بله" checked disabled><label for="tech_seo"> رعایت اصول اولیه سئو (بهینه‌سازی برای موتورهای جستجو مانند گوگل)</label></div>
+                  <div><input type="checkbox" id="tech_search" name="ویژگی_جستجو" value="بله"><label for="tech_search"> قابلیت جستجو در محتوای سایت (مثلاً جستجوی اخبار یا محصولات)</label></div>
+              </div>
+              <div style="margin-top: 10px;"> <label for="seo_keywords">اگر کلمات کلیدی اصلی کسب‌وکارتان را می‌دانید، لطفاً چند مورد را ذکر کنید:</label> <textarea id="seo_keywords" name="کلمات_کلیدی_سئو" placeholder="مثلا: شرکت بازرگانی معتبر، واردات مواد اولیه غذایی، صادرات خشکبار به اروپا..."></textarea> </div>
+         </fieldset>
+
+          <fieldset>
+             <legend>۵. موارد فنی و نگهداری</legend>
+             <!-- ... (تمام فیلدهای بخش ۵) ... -->
+             <div> <label for="domain_name">آیا دامنه (آدرس اینترنتی .ir یا .com و...) برای سایت ثبت کرده‌اید؟</label> <div class="radio-group"> <div><input type="radio" id="domain_yes" name="وضعیت_دامنه" value="بله"><label for="domain_yes">بله، ثبت شده است (لطفاً نام دامنه را در کادر زیر وارد کنید)</label></div> <div><input type="radio" id="domain_no" name="وضعیت_دامنه" value="خیر"><label for="domain_no">خیر، نیاز به راهنمایی و ثبت دارم</label></div> </div> <input type="text" id="domain_name_text" name="دامنه_ثبت_شده" placeholder="example.com یا example.ir" class="inline-text-input" style="display: none;"> </div>
+             <div style="margin-top: 20px;"> <label for="hosting_info">آیا خدمات میزبانی وب (هاست) دارید؟</label> <div class="radio-group"> <div><input type="radio" id="host_yes" name="وضعیت_هاست" value="بله"><label for="host_yes">بله، هاست تهیه شده است (لطفاً نام شرکت میزبان را ذکر کنید)</label></div> <div><input type="radio" id="host_no" name="وضعیت_هاست" value="خیر"><label for="host_no">خیر، نیاز به راهنمایی و تهیه هاست مناسب دارم</label></div> </div> <input type="text" id="hosting_info_text" name="هاستینگ_موجود" placeholder="نام شرکت میزبان..." class="inline-text-input" style="display: none;"> </div>
+             <label style="margin-top: 20px;">چه کسی مسئولیت به‌روزرسانی محتوای سایت (مانند افزودن اخبار، محصولات، تغییرات جزئی) را پس از تحویل بر عهده خواهد داشت؟</label> <div class="radio-group"> <div><input type="radio" id="updater_client" name="مسئول_بروزرسانی" value="تیم_شما_با_آموزش"><label for="updater_client">تیم داخلی شرکت (پس از دریافت آموزش لازم برای کار با پنل مدیریت)</label></div> <div><input type="radio" id="updater_developer" name="مسئول_بروزرسانی" value="مجری_پروژه_توافقی"><label for="updater_developer">شما/مجری پروژه (نیازمند توافق جداگانه برای پشتیبانی و نگهداری)</label></div> <div><input type="radio" id="updater_unsure" name="مسئول_بروزرسانی" value="نامشخص_فعلا"><label for="updater_unsure">هنوز تصمیم‌گیری نشده است</label></div> </div>
+         </fieldset>
+
+         <fieldset>
+             <legend>۶. اطلاعات تماس شما (برای پیگیری)</legend>
+             <!-- ... (تمام فیلدهای بخش ۶) ... -->
+              <div> <label for="contact_person">نام و نام خانوادگی فرد پاسخ‌دهنده / رابط پروژه: <span class="required-star">*</span></label> <input type="text" id="contact_person" name="نام_رابط" required> </div>
+              <div> <label for="contact_email">آدرس ایمیل: <span class="required-star">*</span></label> <input type="email" id="contact_email" name="ایمیل_رابط" required> </div>
+              <div> <label for="contact_phone">شماره تلفن تماس (با پیش‌شماره): (اختیاری)</label> <input type="tel" id="contact_phone" name="تلفن_رابط"> </div>
+         </fieldset>
+
+         <fieldset>
+              <legend>۷. توضیحات تکمیلی</legend>
+              <!-- ... (فیلد بخش ۷) ... -->
+              <div> <label for="additional_comments">اگر نکته، توضیح یا نیازمندی دیگری دارید که در سوالات بالا به آن اشاره نشده است، لطفاً در این قسمت بنویسید:</label> <textarea id="additional_comments" name="توضیحات_تکمیلی" placeholder="هرگونه اطلاعات اضافی که فکر می‌کنید مفید است..."></textarea> </div>
+         </fieldset>
+
+        <!-- Add id="form-status" div here -->
+        <div id="form-status"></div>
+
+        <button type="submit">ارسال فرم نیازسنجی</button>
+
+    </form>
+</div>
+
+<script>
+    // === اسکریپت‌های قبلی برای نمایش/عدم نمایش فیلدهای شرطی ===
+    function toggleConditionalInput(checkboxId, textInputId) {
+        const checkbox = document.getElementById(checkboxId);
+        const textInput = document.getElementById(textInputId);
+        if (checkbox && textInput) {
+            textInput.style.display = checkbox.checked ? 'block' : 'none';
+            checkbox.addEventListener('change', () => {
+                textInput.style.display = checkbox.checked ? 'block' : 'none';
+                if(!checkbox.checked) textInput.value = '';
+            });
+        }
+    }
+    function toggleConditionalInputRadio(radioName, targetValue, textInputId) {
+        const radios = document.getElementsByName(radioName);
+        const textInput = document.getElementById(textInputId);
+        let initiallyChecked = false;
+        if(textInput){
+             radios.forEach(radio => {
+                 if (radio.value === targetValue && radio.checked) {
+                     initiallyChecked = true;
+                 }
+                 radio.addEventListener('change', (event) => {
+                     if (event.target.value === targetValue && event.target.checked) {
+                         textInput.style.display = 'block';
+                     } else {
+                          // Check if *any* radio with this name is checked and matches target value
+                          let shouldHide = true;
+                          radios.forEach(r => {
+                              if (r.value === targetValue && r.checked) {
+                                  shouldHide = false;
+                              }
+                          });
+                          if (shouldHide) {
+                              textInput.style.display = 'none';
+                              textInput.value = '';
+                          }
+                     }
+                 });
+             });
+             textInput.style.display = initiallyChecked ? 'block' : 'none';
+        }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        toggleConditionalInput('page_other_check', 'page_other_text');
+        toggleConditionalInput('lang_other_check', 'lang_other_text');
+        toggleConditionalInputRadio('وضعیت_دامنه', 'بله', 'domain_name_text');
+        toggleConditionalInputRadio('وضعیت_هاست', 'بله', 'hosting_info_text');
+    });
+    // ==========================================================
+
+
+    // === اسکریپت جدید برای ارسال با AJAX و نمایش پیام ===
+    var form = document.getElementById("needs-assessment-form");
+    var statusDiv = document.getElementById("form-status");
+    var submitButton = form.querySelector('button[type="submit"]'); // Get the submit button
+
+    async function handleSubmit(event) {
+        event.preventDefault(); // جلوگیری از ارسال پیش‌فرض
+        var data = new FormData(event.target);
+
+        // غیرفعال کردن دکمه و نمایش پیام "در حال ارسال"
+        submitButton.disabled = true;
+        statusDiv.className = 'sending'; // Add sending class
+        statusDiv.innerHTML = "در حال ارسال اطلاعات...";
+        statusDiv.style.display = 'block'; // Make sure it's visible
+
+        fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: {
+                'Accept': 'application/json' // مهم: درخواست پاسخ JSON
+            }
+        }).then(response => {
+            submitButton.disabled = false; // فعال کردن مجدد دکمه
+            if (response.ok) {
+                statusDiv.className = 'success'; // Add success class
+                statusDiv.innerHTML = "فرم شما با موفقیت ثبت شد. متشکریم!";
+                form.reset(); // پاک کردن فرم (اختیاری)
+                form.style.display = 'none'; // مخفی کردن فرم پس از موفقیت
+            } else {
+                // تلاش برای خواندن خطای Formspree (اگر JSON باشد)
+                response.json().then(data => {
+                    statusDiv.className = 'error'; // Add error class
+                    if (Object.hasOwn(data, 'errors')) {
+                        statusDiv.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                    } else {
+                        statusDiv.innerHTML = "خطایی در ارسال فرم رخ داد. لطفاً دوباره تلاش کنید.";
+                    }
+                }).catch(error => {
+                     statusDiv.className = 'error'; // Add error class
+                     statusDiv.innerHTML = "خطایی در ارسال فرم رخ داد. لطفاً دوباره تلاش کنید.";
+                });
+            }
+        }).catch(error => {
+            submitButton.disabled = false; // فعال کردن مجدد دکمه در صورت خطای شبکه
+            statusDiv.className = 'error'; // Add error class
+            statusDiv.innerHTML = "خطای شبکه. لطفاً اتصال اینترنت خود را بررسی کرده و دوباره تلاش کنید.";
+        });
+    }
+
+    form.addEventListener("submit", handleSubmit);
+    // ======================================================
+
+</script>
+
+</body>
+</html>
